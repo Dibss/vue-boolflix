@@ -3,16 +3,18 @@
     <div>
       <h1>boolflix</h1>
     </div>
-    <div id="searchbar">
-      <input type="text" placeholder="Scrivi il titolo di un film o una serie tv">
-      <button>Cerca</button>
-    </div>
+    <SearchComp/>
   </div>
 </template>
 
 <script>
+import SearchComp from "../partials/SearchComp.vue"
+
 export default {
 name: 'HeaderComp',
+components : {
+  SearchComp
+}
 }
 </script>
 
@@ -29,19 +31,6 @@ name: 'HeaderComp',
     color: red;
     font-weight: 300;
     padding-left: 1em;
-  }
-  #searchbar{
-    flex-basis: 50%;
-    margin-right: 1em;
-    text-align: right;
-    input{
-      padding: 0.3em;
-      width: 30%;
-    }
-    button{
-      margin-left: 0.5em;
-      padding: 0.3em;
-    }
   }
 }
 </style>

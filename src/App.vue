@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-    <header>
-      <HeaderComp/>
-    </header>
     <main>
       <TvWallComp/>
     </main>
@@ -10,13 +7,11 @@
 </template>
 
 <script>
-import HeaderComp from "./components/HeaderComp.vue";
 import TvWallComp from "./components/TvWallComp.vue"
 
 export default {
   name: 'App',
   components: {
-    HeaderComp,
     TvWallComp
   }
 }
@@ -27,4 +22,5 @@ export default {
 #app {
   font-family: sans-serif;
 }
+.d-block{display: block;}
 </style>
