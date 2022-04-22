@@ -22,5 +22,8 @@ export default {
 #app {
   font-family: sans-serif;
 }
+
+li{list-style-type: none;}
 .d-block{display: block;}
+.d-none{display: none;}
 </style>

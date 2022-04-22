@@ -4,16 +4,18 @@
     <!-- per le pagine : @pageSearch="searchPage" :pageArr="pageArr"  -->
     <div id="tv-wall" v-if="!loadingStatus">
       <TvItemComp v-for="film in filmArr" :key="film.id"
-        :img="'https://www.themoviedb.org/t/p/w500/' + film.poster_path"
+        :img="'https://www.themoviedb.org/t/p/w342/' + film.poster_path"
         :originalTitle="film.original_title"
         :title="film.title"
         :originalLanguage="film.original_language"
+        :trama="film.overview"
       />
       <TvItemComp v-for="serie in serieArr" :key="serie.id"
-        :img="'https://www.themoviedb.org/t/p/w500/' + serie.poster_path"
+        :img="'https://www.themoviedb.org/t/p/w342/' + serie.poster_path"
         :originalTitle="serie.original_name"
         :title="serie.name"
         :originalLanguage="serie.original_language"
+        :trama="serie.overview"
       />
       <ItemsFoundComp :items="filmArr.length + serieArr.length"/>
     </div>
@@ -40,7 +42,6 @@ components : {
 },
 data(){
   return{
-    tvArr: [],
     filmArr : [],
     serieArr : [],
     page : 1,
@@ -53,6 +54,28 @@ created(){
   // this.getPage()
 },
 methods : {
+  /*language : function(){
+    for(let i = 0; i < this.filmArr; i++){
+      switch(this.filmArr[i].original_language){
+        case "en":
+          document.querySelector(".language").innerHTML = "&#127482;";
+        break;
+        default :
+          this.filmArr[i].original_language
+      }
+    }
+  },*/
+  rated : function(){
+
+  },
+  // NON FUNZIONA
+  doubleTitle : function(){
+    this.filmArr.forEach(element => {
+      if(element.title == element.original_title){
+        this.filmArr.splice(element.original_title, 1)
+      }
+    });
+  },
   get(a, b){
     axios.get(`https://api.themoviedb.org/3/search/movie?api_key=1ddea58670cc4bdbfbe9d2d07181ce0c&query=${a}&page=${b}`)
       .then((res) => {
@@ -72,6 +95,8 @@ methods : {
       .catch((error) => {
         console.log(error)
       })
+    
+    this.doubleTitle()
   },
   // per le pagine
   // getPage(){
