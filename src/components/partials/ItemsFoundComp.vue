@@ -18,6 +18,7 @@ props : {
   text-align: center;
   color: #fff;
   font-weight: 700;
-  margin-bottom: 1em;
+  margin: 2em;
+  flex-basis: 100%;
 }
 </style>
