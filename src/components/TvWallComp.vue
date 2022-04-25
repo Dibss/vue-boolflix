@@ -44,13 +44,13 @@ data(){
   return{
     filmArr : [],
     serieArr : [],
-    page : 1,
+    page : 12,
     pageArr : [],
     loadingStatus: true,
   }
 },
 created(){
-  this.get("a", 1);
+  this.get("a", this.page);
   // this.getPage()
 },
 methods : {

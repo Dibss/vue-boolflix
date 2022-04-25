@@ -5,14 +5,14 @@
     </div>
     <div id="searchbar">
       <form action="" class="d-flex">
+        <select name="page" id="page" @click.prevent="$emit( 'pageSearch', selectedPage )" v-model="selectedPage">
+          <option :value="page" v-for="page in pageArr" :key="page.id">{{page}}</option>
+        </select>
         <input type="text"
           placeholder="Scrivi il titolo di un film o una serie tv"
           v-model="inputText"
         >
         <button type="submit" @click.prevent="$emit( 'searchFunction', inputText )">Cerca</button>
-        <!-- <select name="page" id="page" @click.prevent="$emit( 'pageSearch', selectedPage )" v-model="selectedPage">
-          <option :value="page" v-for="page in pageArr" :key="page.id">{{page}}</option>
-        </select> -->
       </form>
     </div>
   </div>
@@ -22,10 +22,12 @@
 
 export default {
 name: 'SearchComp',
+props : {
+  pageArr : Array
+},
 data(){
   return{
     inputText : "",
-    pageArr : Array
   }
 }
 }
