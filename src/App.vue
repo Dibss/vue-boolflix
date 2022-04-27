@@ -23,7 +23,9 @@ export default {
   font-family: sans-serif;
 }
 
-li{list-style-type: none;}
+li{list-style-type: none; display: inline-block;}
 .d-block{display: block;}
 .d-none{display: none;}
+
+.f-bold{font-weight: 700;}
 </style>

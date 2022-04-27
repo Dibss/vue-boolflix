@@ -5,7 +5,7 @@
     </div>
     <div id="searchbar">
       <form action="" class="d-flex">
-        <select name="page" id="page" @click.prevent="$emit( 'pageSearch', selectedPage )" v-model="selectedPage">
+        <select name="page" id="page" @click.prevent="$emit( 'pageSearch', selectedPage )" @keyup.enter.prevent="$emit( 'pageSearch', selectedPage )" v-model="selectedPage">
           <option :value="page" v-for="page in pageArr" :key="page.id">{{page}}</option>
         </select>
         <input type="text"
@@ -28,6 +28,7 @@ props : {
 data(){
   return{
     inputText : "",
+    selectedPage : 1,
   }
 }
 }
@@ -61,6 +62,9 @@ data(){
     button{
       margin-left: 0.5em;
       padding: 0.3em;
+    }
+    #page{
+      margin-right: 0.5em;
     }
   }
 }

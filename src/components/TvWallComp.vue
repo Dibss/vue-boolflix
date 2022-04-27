@@ -1,22 +1,19 @@
 <template>
   <div id="tv-container">
-    <SearchComp @searchFunction="search"/>
+    <SearchComp @searchFunction="search" @pageSearch="selectPage" :pageArr="pageArr"/>
     <!-- per le pagine : @pageSearch="searchPage" :pageArr="pageArr"  -->
     <div id="tv-wall" v-if="!loadingStatus">
-      <TvItemComp v-for="film in filmArr" :key="film.id"
-        :img="'https://www.themoviedb.org/t/p/w342/' + film.poster_path"
-        :originalTitle="film.original_title"
-        :title="film.title"
-        :originalLanguage="film.original_language"
-        :trama="film.overview"
-      />
-      <TvItemComp v-for="serie in serieArr" :key="serie.id"
-        :img="'https://www.themoviedb.org/t/p/w342/' + serie.poster_path"
-        :originalTitle="serie.original_name"
-        :title="serie.name"
-        :originalLanguage="serie.original_language"
-        :trama="serie.overview"
-      />
+      <ul>
+        <TvItemComp v-for="trending in trendingArr" :key="trending.id" v-show="!searchStatus"
+          :tv="trending"
+        />
+        <TvItemComp v-for="film in filmArr" :key="film.id" v-show="searchStatus"
+          :tv="film"
+        />
+        <TvItemComp v-for="serie in serieArr" :key="serie.id" v-show="searchStatus"
+          :tv="serie"
+        />
+      </ul>
       <ItemsFoundComp :items="filmArr.length + serieArr.length"/>
     </div>
     <div v-else id="loader">
@@ -42,29 +39,21 @@ components : {
 },
 data(){
   return{
+    trendingArr : [],
     filmArr : [],
     serieArr : [],
-    page : 12,
+    page : 1,
     pageArr : [],
     loadingStatus: true,
+    searchStatus : false,
   }
 },
 created(){
   this.get("a", this.page);
+  this.pages();
   // this.getPage()
 },
 methods : {
-  /*language : function(){
-    for(let i = 0; i < this.filmArr; i++){
-      switch(this.filmArr[i].original_language){
-        case "en":
-          document.querySelector(".language").innerHTML = "&#127482;";
-        break;
-        default :
-          this.filmArr[i].original_language
-      }
-    }
-  },*/
   rated : function(){
 
   },
@@ -77,6 +66,15 @@ methods : {
     });
   },
   get(a, b){
+    axios.get(`https://api.themoviedb.org/3/trending/all/week?api_key=1ddea58670cc4bdbfbe9d2d07181ce0c`)
+      .then((res) => {
+        console.log('TRENDING:', res.data.results);
+        this.trendingArr = res.data.results
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+
     axios.get(`https://api.themoviedb.org/3/search/movie?api_key=1ddea58670cc4bdbfbe9d2d07181ce0c&query=${a}&page=${b}`)
       .then((res) => {
         console.log('FILM:', res.data.results);
@@ -98,42 +96,21 @@ methods : {
     
     this.doubleTitle()
   },
-  // per le pagine
-  // getPage(){
-  //   axios.get(`https://api.themoviedb.org/3/search/movie?api_key=1ddea58670cc4bdbfbe9d2d07181ce0c&query=a`)
-  //     .then((res) => {
-  //       for(let i = 0; i < res.data.length; i++){
-  //         if(this.pageArr.includes(res.data[i].page)){
-  //           this.pageArr
-  //         } else {
-  //           this.pageArr.push(res.data[i].page)
-  //         }
-  //       }
-  //       console.log("PAGES", this.pageArr)
-  //     })
-  //     .catch((error) => {
-  //       console.log(error)
-  //     })
-  // },
+  pages : function(){
+    for(let i = 1; i < 1001; i++){
+      this.pageArr.push(i);
+    }
+  },
+  selectPage(page){
+    this.page = page;
+    console.log(this.page)
+  },
   search( searchedText ){
     this.inputText = searchedText;
     console.log(this.inputText);
+    this.searchStatus = true;
     this.get(this.inputText, this.page);
   },
-  searchPage(page){
-    this.selectedPage = page;
-    console.log(this.selectedPage);
-  },
-  /*language : function(){
-    switch( this.tvArr.original_language ){
-      case "it":
-        this.tvArr.original_language = "&#127470;"
-        break;
-      case "en":
-        this.tvArr.original_language = "&#127482;"
-        break;
-    }
-  }*/
 }
 }
 </script>
