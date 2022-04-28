@@ -4,7 +4,7 @@
       <div class="flip-card-front"
       :style="{backgroundImage : `url(https://www.themoviedb.org/t/p/w342/${tv.poster_path})`}"
       ></div>
-      <div class="flip-card-back">
+      <div class="flip-card-back" :style="{backgroundImage : `url(https://www.themoviedb.org/t/p/w342/${tv.backdrop_path})`}">
         <div class="f-bold">Titolo:
           <span>{{tv.title}}{{tv.name}}</span>
         </div>
