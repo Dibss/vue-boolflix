@@ -15,7 +15,7 @@
           <span class="language" :class="(tv.original_language == 'en')? 'flag-en' : (tv.original_language == 'it')? 'flag-it': 'flag-unknown'"></span>
         </div>
         <div class="f-bold">Voto:
-          <span>{{tv.vote_average}}</span>
+          <span v-for="i in 5" :key="i" :class="(i <= rated())? 'star' : ''"></span>
         </div>
         <div class="f-bold">Overview:
           <span>{{tv.overview}}</span>
@@ -32,7 +32,10 @@ props : {
   tv : Object
 },
 methods : {
-
+  rated(){
+    const rounded = Math.ceil(this.tv.vote_average / 2);
+    return rounded
+  }
 }
 }
 </script>
@@ -80,6 +83,8 @@ methods : {
   padding: 1em;
   overflow-y: auto;
 }
+
+.star::before{content: "\2B50"; color: yellow;}
 
 div.f-bold{margin-bottom: 0.5em;}
 

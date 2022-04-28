@@ -7,12 +7,16 @@
         <TvItemComp v-for="trending in trendingArr" :key="trending.id" v-show="!searchStatus"
           :tv="trending"
         />
-        <TvItemComp v-for="film in filmArr" :key="film.id" v-show="searchStatus"
-          :tv="film"
-        />
-        <TvItemComp v-for="serie in serieArr" :key="serie.id" v-show="searchStatus"
-          :tv="serie"
-        />
+        <div v-show="searchStatus">
+          <h2 class="mb-2">Film</h2>
+          <TvItemComp v-for="film in filmArr" :key="film.id"
+            :tv="film"
+          />
+          <h2 class="my-2">Serie tv</h2>
+          <TvItemComp v-for="serie in serieArr" :key="serie.id"
+            :tv="serie"
+          />
+        </div>
       </ul>
       <ItemsFoundComp :items="filmArr.length + serieArr.length"/>
     </div>
@@ -54,17 +58,6 @@ created(){
   // this.getPage()
 },
 methods : {
-  rated : function(){
-
-  },
-  // NON FUNZIONA
-  doubleTitle : function(){
-    this.filmArr.forEach(element => {
-      if(element.title == element.original_title){
-        this.filmArr.splice(element.original_title, 1)
-      }
-    });
-  },
   get(a, b){
     axios.get(`https://api.themoviedb.org/3/trending/all/week?api_key=1ddea58670cc4bdbfbe9d2d07181ce0c`)
       .then((res) => {

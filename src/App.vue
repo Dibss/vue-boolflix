@@ -27,5 +27,8 @@ li{list-style-type: none; display: inline-block;}
 .d-block{display: block;}
 .d-none{display: none;}
 
+.mb-2{margin-bottom: 1em;}
+.my-2{margin-top: 1em; margin-bottom: 1em;}
+
 .f-bold{font-weight: 700;}
 </style>
